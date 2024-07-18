@@ -7,60 +7,68 @@ let argumentParserDependency: Target.Dependency = .product(name: "ArgumentParser
 
 var targets: [Target] = [
     .executableTarget(
-        name: "dash",
+        name: "fire",
         dependencies: [
-            "DashKit"
+            "FireKit"
         ]
     ),
     .target(
-        name: "DashKit",
-         dependencies: [
+        name: "FireCore",
+        dependencies: [
+            swiftToolsSupportDependency
+            "DashSupport"
+            "XcodeProj",
+        ]
+    )
+    .target(
+        name: "FireKit",
+        dependencies: [
             swiftToolsSupportDependency,
             argumentParserDependency,
-            "DashPlugin"
-         ]
+            "FirePlugin"
+        ]
     ),
     .target(
-        name: "DashSupport",
+        name: "FireSupport",
         dependencies[
             swiftToolsSupportDependency,
             loggingDependency
         ]
     )
     .target(
-        name: "DashPlugin",
-        dependencies: ["DashSupport"]
+        name: "FirePlugin",
+        dependencies: ["FireSupport"]
     ),
     .testTarget(
-        name: "DashKitTests",
-        dependencies: ["DashKit"]
+        name: "FireKitTests",
+        dependencies: ["FireKit"]
     ),
     .testTarget(
-        name: "DashCoreTests",
-        dependencies: ["DashCore"]
+        name: "FireCoreTests",
+        dependencies: ["FireCore"]
     ),
     .testTarget(
-        name: "DashSupportTests",
-        dependencies: ["DashSupport"]
+        name: "FireSupportTests",
+        dependencies: ["FireSupport"]
     )
 ]
 
 let package = Package(
-    name: "dash",
+    name: "fire",
     platforms: [.macOS(.v12)],
     products: [
-        .executable(name: "dash", targets: ["dash"]),
+        .executable(name: "fire", targets: ["fire"]),
         .library(
-            name: "DashKit",
-            targets: ["DashKit"]
+            name: "FireKit",
+            targets: ["FireKit"]
         ),
         .library(
-            name: "DashCore",
-            targets: ["DashCore"]
+            name: "FireCore",
+            targets: ["FireCore"]
         ),
         .library(
-            name: "DashSupport",
-            targets: ["DashSupport"]
+            name: "FireSupport",
+            targets: ["FireSupport"]
         )
     ],
     dependencies: [
@@ -71,6 +79,7 @@ let package = Package(
         .package(url: "https://github.com/tuist/XcodeProj", exact: "8.20.0"),
         .package(url: "https://github.com/pelagornis/plcommand", from: "1.2.5"),
         .package(url: "https://github.com/jihoonme/swift-html", from: "1.0.0"),
+        .package(url: "https://github.com/jihoonme/swift-css", from: "1.0.0"),
     ],
     targets: targets
 )
